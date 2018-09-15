@@ -7,9 +7,7 @@ while player != "q":
     computer = random_option()
     # prompt player for their option
     player = input("\nRock, Paper, Scissors, Lizard, Spock? or 'q' to quit\n")
-    if player == computer:
-        print("Tie")
-    elif player == "Rock":
+    if player == "Rock":
         print(rock_message(computer))
     elif player == "Paper":
         print(paper_message(computer))
