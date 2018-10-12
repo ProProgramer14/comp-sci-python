@@ -43,22 +43,36 @@ def isusersGuessValid(guess):
 # For now, return True if the guess and the secret are equal, otherwise return False.
 
 def scoreUsersGuess(guess, secret):
+    # create variables to hold number of black pins, white pins, and unmatched letters from secret
     black = 0
     white = 0
-    leftovers=''
+    leftovers = ''
+    
+    # loop through each of the 4 letters and check how many are in the correct position
     for i in range(4):
+        # is it a match? 
         if guess[i] == secret[i]:
-            black +=1
-            guess = guess[0:i] + '' + guess[i+1:]
+            # yep, give it a black peg 
+            black += 1
+            # replace that letter with a blank
+            guess = guess[0:i] + ' ' + guess[i+1:]
         else:
+            # nope, put that secret in leftovers to check in loop below
             leftovers += secret[i]
-    print(guess)
-    for color in leftovers:
-        if color in guess:
-            white +=1
-            pos = guess.find(color)
-            guess = guess[0:pos] + '' + guess[pos+1:] 
 
+    # loop leftover secret letters
+    for l in leftovers:
+        # is the letter somewhere in the users' guess? 
+        if l in guess:
+            # yep, give it a white peg
+            white += 1
+            # find the exact letter and replace with blank (could be duplicates)
+            pos = guess.find(l)
+            guess = guess[0:pos] + ' ' + guess[pos+1:] 
+
+    print("You have %s black pins and %s white pins" % (black, white)) 
+       
+    # return number of black and white pegs
     return black, white          
 
 #
@@ -76,5 +90,5 @@ print(secret)
 guess = usersGuess()
 
 # Keep asking for guesses until the routine that scores the user’s guess returns True.
-while scoreUsersGuess(guess, secret) != True:
+while scoreUsersGuess(guess, secret)[0] != 4:
     guess = usersGuess()
